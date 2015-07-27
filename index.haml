@@ -1,0 +1,8 @@
+%html
+  %head
+    %title My Angular App!
+    %script{:src =>"http://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"}
+    %script{:src => "app.js"}
+  %body{"ng-app" => "flapperNews", "ng-controller" => "MainCtrl"}
+    %div
+      {{test}}
