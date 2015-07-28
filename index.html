@@ -1,26 +1,41 @@
 <html>
   <head>
-    <title>My Angular App!</title>
+    <title>CP's Version of Flapper News</title>
+    <link href='//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css' rel='stylesheet'>
+    <link href='style.css' rel='stylesheet'>
     <script src='http://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js'></script>
     <script src='app.js'></script>
   </head>
   <body ng-app='flapperNews' ng-controller='MainCtrl'>
-    <div ng-repeat="post in posts | orderBy: '-upvotes'">
-      <span ng-click='incrementUpvotes(post)'>^</span>
-      <a href='{{post.link}}' ng-show='post.link'>
-        {{post.title}}
-      </a>
-      <span ng-hide='post.link'>
-        {{post.title}}
-      </span>
-      <span>- upvotes: {{post.upvotes}}</span>
+    <div class='row'>
+      <div class='col-md-6 col-md-offset-3'>
+        <div class='page-header'>
+          <h1>Flapper News</h1>
+        </div>
+        <div ng-repeat="post in posts | orderBy: '-upvotes'">
+          <span class='glyphicon glyphicon-thumbs-up' ng-click='incrementUpvotes(post)'>
+            {{post.upvotes}}
+          </span>
+          <span class='post-text'>
+            <a href='{{post.link}}' ng-show='post.link'>
+              {{post.title}}
+            </a>
+            <span ng-hide='post.link'>
+              {{post.title}}
+            </span>
+          </span>
+        </div>
+        <form class='new-post' ng-submit='addPost()'>
+          <h3>Add a new post</h3>
+          <div class='form-group'>
+            <input ng-model='title' placeholder='Title' type='text'>
+          </div>
+          <div class='form-group'>
+            <input ng-model='link' placeholder='Link' type='text'>
+          </div>
+          <button class='btn btn-primary' type='submit'>Post</button>
+        </form>
+      </div>
     </div>
-    <form ng-submit='addPost()'>
-      <input ng-model='title' placeholder='Title' type='text'>
-      <br>
-      <input ng-model='link' placeholder='Link' type='text'>
-      <br>
-      <button type='submit'>Post</button>
-    </form>
   </body>
 </html>
