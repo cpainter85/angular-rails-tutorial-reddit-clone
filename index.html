@@ -29,6 +29,11 @@
             {{post.title}}
           </span>
         </span>
+        <span>
+          <a href='#/posts/{{$index}}'>
+            Comments
+          </a>
+        </span>
       </div>
       <form class='new-post' ng-submit='addPost()'>
         <h3>Add a new post</h3>
@@ -40,6 +45,26 @@
         </div>
         <button class='btn btn-primary' type='submit'>Post</button>
       </form>
+    </script>
+    <script id='/posts.html' type='text/ng-template'>
+      <div class='page-header'>
+        <h3>
+          <a href='{{post.link}}' ng-show='post.link'>
+            {{post.title}}
+          </a>
+          <span ng-hide='post.link'>
+            {{post.title}}
+          </span>
+        </h3>
+      </div>
+      <div ng-repeat="comment in post.comments | orderBy:'-upvotes'">
+        <span class='glyphicon glyphicon-thumbs-up' ng-click='incrementUpvotes(comment)'>
+          {{comment.upvotes}} - by {{comment.author}}
+        </span>
+        <span class='comment-text'>
+          {{comment.body}}
+        </span>
+      </div>
     </script>
   </body>
 </html>

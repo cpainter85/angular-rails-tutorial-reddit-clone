@@ -22,7 +22,9 @@
             {{post.title}}
           %span{"ng-hide" => "post.link"}
             {{post.title}}
-
+        %span
+          %a{:href => "#/posts/{{$index}}"}
+            Comments
       %form.new-post{"ng-submit" => "addPost()"}
         %h3 Add a new post
         .form-group
@@ -30,3 +32,15 @@
         .form-group
           %input{:type => "text", :placeholder => "Link", "ng-model" => "link"}
         %button.btn.btn-primary{:type => "submit"} Post
+    %script{:type => "text/ng-template", :id => "/posts.html"}
+      .page-header
+        %h3
+          %a{"ng-show" => "post.link", :href => "{{post.link}}"}
+            {{post.title}}
+          %span{"ng-hide" => "post.link"}
+            {{post.title}}
+      %div{"ng-repeat" => "comment in post.comments | orderBy:'-upvotes'"}
+        %span.glyphicon.glyphicon-thumbs-up{"ng-click" => "incrementUpvotes(comment)"}
+          {{comment.upvotes}} - by {{comment.author}}
+        %span.comment-text
+          {{comment.body}}
