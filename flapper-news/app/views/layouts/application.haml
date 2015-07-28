@@ -1,0 +1,53 @@
+!!!html
+%html
+  %head
+    %title FlapperNews
+    %link{:href => "//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css", :rel => "stylesheet"}
+    %script{:src =>"http://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"}
+    %script{:src => "//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"}
+    = stylesheet_link_tag    'application', media: 'all'
+    = javascript_include_tag 'application'
+    = csrf_meta_tags
+  %body{"ng-app" => "flapperNews"}
+    .row
+      .col-md-6.col-md-offset-3
+        %ui-view
+    %script{:type => "text/ng-template", :id => "/home.html"}
+      .page-header
+        %h1 Flapper News
+
+      %div{"ng-repeat" => "post in posts | orderBy: '-upvotes'"}
+        %span.glyphicon.glyphicon-thumbs-up{"ng-click" => "incrementUpvotes(post)"}
+          {{post.upvotes}}
+        %span.post-text
+          %a{"ng-show" => "post.link", :href => "{{post.link}}"}
+            {{post.title}}
+          %span{"ng-hide" => "post.link"}
+            {{post.title}}
+        %span
+          %a{:href => "#/posts/{{$index}}"}
+            Comments
+      %form.new-post{"ng-submit" => "addPost()"}
+        %h3 Add a new post
+        .form-group
+          %input{:type => "text", :placeholder => "Title", "ng-model" => "title"}
+        .form-group
+          %input{:type => "text", :placeholder => "Link", "ng-model" => "link"}
+        %button.btn.btn-primary{:type => "submit"} Post
+    %script{:type => "text/ng-template", :id => "/posts.html"}
+      .page-header
+        %h3
+          %a{"ng-show" => "post.link", :href => "{{post.link}}"}
+            {{post.title}}
+          %span{"ng-hide" => "post.link"}
+            {{post.title}}
+      %div{"ng-repeat" => "comment in post.comments | orderBy:'-upvotes'"}
+        %span.glyphicon.glyphicon-thumbs-up{"ng-click" => "incrementUpvotes(comment)"}
+          {{comment.upvotes}} - by {{comment.author}}
+        %span.comment-text
+          {{comment.body}}
+      %form.comment-form{"ng-submit" => "addComment()"}
+        %h3 Add a new comment
+        .form-group
+          %input.form-control{:type => "text", :placeholder => "Comment", "ng-model" => "body"}
+        %button.btn.btn-primary{:type => "submit"} Post
