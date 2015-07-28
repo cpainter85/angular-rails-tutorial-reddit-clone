@@ -6,25 +6,27 @@
     %script{:src =>"http://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"}
     %script{:src => "//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"}
     %script{:src => "app.js"}
-  %body{"ng-app" => "flapperNews", "ng-controller" => "MainCtrl"}
+  %body{"ng-app" => "flapperNews"}
     .row
       .col-md-6.col-md-offset-3
-        .page-header
-          %h1 Flapper News
+        %ui-view
+    %script{:type => "text/ng-template", :id => "/home.html"}
+      .page-header
+        %h1 Flapper News
 
-        %div{"ng-repeat" => "post in posts | orderBy: '-upvotes'"}
-          %span.glyphicon.glyphicon-thumbs-up{"ng-click" => "incrementUpvotes(post)"}
-            {{post.upvotes}}
-          %span.post-text
-            %a{"ng-show" => "post.link", :href => "{{post.link}}"}
-              {{post.title}}
-            %span{"ng-hide" => "post.link"}
-              {{post.title}}
+      %div{"ng-repeat" => "post in posts | orderBy: '-upvotes'"}
+        %span.glyphicon.glyphicon-thumbs-up{"ng-click" => "incrementUpvotes(post)"}
+          {{post.upvotes}}
+        %span.post-text
+          %a{"ng-show" => "post.link", :href => "{{post.link}}"}
+            {{post.title}}
+          %span{"ng-hide" => "post.link"}
+            {{post.title}}
 
-        %form.new-post{"ng-submit" => "addPost()"}
-          %h3 Add a new post
-          .form-group
-            %input{:type => "text", :placeholder => "Title", "ng-model" => "title"}
-          .form-group
-            %input{:type => "text", :placeholder => "Link", "ng-model" => "link"}
-          %button.btn.btn-primary{:type => "submit"} Post
+      %form.new-post{"ng-submit" => "addPost()"}
+        %h3 Add a new post
+        .form-group
+          %input{:type => "text", :placeholder => "Title", "ng-model" => "title"}
+        .form-group
+          %input{:type => "text", :placeholder => "Link", "ng-model" => "link"}
+        %button.btn.btn-primary{:type => "submit"} Post
