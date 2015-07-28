@@ -44,3 +44,8 @@
           {{comment.upvotes}} - by {{comment.author}}
         %span.comment-text
           {{comment.body}}
+      %form.comment-form{"ng-submit" => "addComment()"}
+        %h3 Add a new comment
+        .form-group
+          %input.form-control{:type => "text", :placeholder => "Comment", "ng-model" => "body"}
+        %button.btn.btn-primary{:type => "submit"} Post
